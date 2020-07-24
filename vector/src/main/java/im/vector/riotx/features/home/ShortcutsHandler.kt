@@ -27,6 +27,7 @@ import im.vector.matrix.android.api.util.toMatrixItem
 import im.vector.riotx.core.glide.GlideApp
 import im.vector.riotx.core.utils.DimensionConverter
 import im.vector.riotx.features.home.room.detail.RoomDetailActivity
+import im.vector.riotx.features.notifications.RoomEventGroupInfo
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -52,7 +53,7 @@ class ShortcutsHandler @Inject constructor(
         }
     }
 
-    fun observeRoomsAndBuildShortcuts(): Disposable {
+    fun observeRoomsAndBuildShortcuts(importantRoom: RoomEventGroupInfo? = null): Disposable {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) {
             // No op
             return Observable.empty<Unit>().subscribe()
@@ -64,7 +65,8 @@ class ShortcutsHandler @Inject constructor(
                 .observeOn(Schedulers.computation())
                 .subscribe { rooms ->
                     val shortcuts = rooms
-                            .filter { room -> room.isFavorite }
+                            .filter { room -> room.isFavorite || room.roomId == importantRoom?.roomId }
+                            .sortedByDescending { room -> room.roomId == importantRoom?.roomId }
                             .take(n = 4) // Android only allows us to create 4 shortcuts
                             .map { room ->
                                 val intent = RoomDetailActivity.shortcutIntent(context, room.roomId)
@@ -77,6 +79,7 @@ class ShortcutsHandler @Inject constructor(
                                         .setShortLabel(room.displayName)
                                         .setIcon(bitmap?.toProfileImageIcon())
                                         .setIntent(intent)
+                                        .setLongLived(true)
                                         .build()
                             }
 
