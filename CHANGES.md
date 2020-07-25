@@ -2,7 +2,7 @@ Changes in Element 1.0.1 (2020-XX-XX)
 ===================================================
 
 Features ✨:
- -
+ - Support for the Conversations feature in Android 11 (#1722)
 
 Improvements 🙌:
  - Sending events is now retried only 3 times, so we avoid blocking the sending queue too long.

@@ -67,7 +67,7 @@ class ShortcutsHandler @Inject constructor(
                 .subscribe { rooms ->
                     val shortcuts = rooms
                             .filter { room -> room.isFavorite || room.roomId == importantRoom?.roomId }
-                            .sortedByDescending { room -> room.roomId == importantRoom?.roomId }
+                            .sortedByDescending { room -> room.roomId == importantRoom?.roomId } // Make sure we include importantRoom
                             .take(n = 4) // Android only allows us to create 4 shortcuts
                             .map { room ->
                                 val intent = RoomDetailActivity.shortcutIntent(context, room.roomId)

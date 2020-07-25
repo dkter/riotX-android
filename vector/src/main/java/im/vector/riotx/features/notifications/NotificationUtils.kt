@@ -512,6 +512,8 @@ class NotificationUtils @Inject constructor(private val context: Context,
                                       lastMessageTimestamp: Long,
                                       senderDisplayNameForReplyCompat: String?,
                                       tickerText: String): Notification {
+        // Rebuild shortcuts, explicitly including the room being notified about.
+        // API 30+ requires a shortcut in order to enable conversation features
         shortcutsHandler.get().observeRoomsAndBuildShortcuts(roomInfo)
 
         val accentColor = ContextCompat.getColor(context, R.color.notification_accent_color)
@@ -530,6 +532,7 @@ class NotificationUtils @Inject constructor(private val context: Context,
                 // that can be displayed in not disturb mode if white listed (the later will need compat28.x)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
 
+                // ID of the corresponding shortcut, for conversation features under API 30+
                 .setShortcutId(roomInfo.roomId)
 
                 // Title for API < 16 devices.
