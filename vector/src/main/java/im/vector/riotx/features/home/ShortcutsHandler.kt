@@ -17,6 +17,7 @@
 package im.vector.riotx.features.home
 
 import android.content.Context
+import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.Bitmap
 import android.os.Build
@@ -80,6 +81,7 @@ class ShortcutsHandler @Inject constructor(
                                         .setIcon(bitmap?.toProfileImageIcon())
                                         .setIntent(intent)
                                         .setLongLived(true)
+                                        .setCategories(setOf(ShortcutInfo.SHORTCUT_CATEGORY_CONVERSATION))
                                         .build()
                             }
 
