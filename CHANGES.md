@@ -1,12 +1,62 @@
-Changes in Element 1.0.1 (2020-XX-XX)
+Changes in Element 1.0.5 (2020-XX-XX)
 ===================================================
 
 Features ✨:
  - Support for the Conversations feature in Android 11 (#1722)
+ - Protect access to the app by a pin code (#1700)
+
+Improvements 🙌:
+ -
+
+Bugfix 🐛:
+ - Fix invisible toolbar (Status.im theme) (#1746)
+ - Fix relative date time formatting (#822)
+
+Translations 🗣:
+ - Add PlayStore description resources in the Triple-T format, to let Weblate handle them
+
+SDK API changes ⚠️:
+ -
+
+Build 🧱:
+ -
+ 
+Other changes:
+ - Use `Context#getSystemService` extension function provided by `core-ktx` (#1702)
+ - Hide Flair settings, this is not implemented yet.
+ - Rename package `im.vector.riotx.attachmentviewer` to `im.vector.lib.attachmentviewer`
+ - Rename package `im.vector.riotx.multipicker` to `im.vector.lib.multipicker`
+ - Rename package `im.vector.riotx` to `im.vector.app`
+
+Changes in Element 1.0.4 (2020-08-03)
+===================================================
+
+Bugfix 🐛:
+ - Fix Crash when opening invite to room user screen
+
+Changes in Element 1.0.3 (2020-07-31)
+===================================================
+
+Features ✨:
+ - Support server admin option to disable E2EE for DMs / private rooms [users can still enable] (#1794)
+
+Bugfix 🐛:
+ - Crash reported on playstore for HomeActivity launch (151 reports)
+
+Changes in Element 1.0.2 (2020-07-29)
+===================================================
+
+Improvements 🙌:
+ - Added Session Database migration to avoid unneeded initial syncs
+
+Changes in Element 1.0.1 (2020-07-28)
+===================================================
 
 Improvements 🙌:
  - Sending events is now retried only 3 times, so we avoid blocking the sending queue too long.
  - Display warning when fail to send events in room list
+ - Improve UI of edit role action in member profile
+ - Moderation | New screen to display list of banned users in room settings, with unban action
 
 Bugfix 🐛:
  - Fix theme issue on Room directory screen (#1613)
@@ -16,15 +66,11 @@ Bugfix 🐛:
  - Fix 404 on EMS (#1761)
  - Fix Infinite loop at startup when migrating account from Riot (#1699)
  - Fix Element crashes in loop after initial sync (#1709)
-
-Translations 🗣:
- -
-
-SDK API changes ⚠️:
- - 
-
-Build 🧱:
- -
+ - Remove inner mx-reply tags before replying
+ - Fix timeline items not loading when there are only filtered events
+ - Fix "Voice & Video" grayed out in Settings (#1733)
+ - Fix Allow VOIP call in all rooms with 2 participants (even if not DM)
+ - Migration from old client does not enable notifications (#1723)
 
 Other changes:
  - i18n deactivated account error
