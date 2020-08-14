@@ -42,6 +42,7 @@ import im.vector.app.BuildConfig
 import im.vector.app.R
 import im.vector.app.core.resources.StringProvider
 import im.vector.app.core.utils.startNotificationChannelSettingsIntent
+import im.vector.app.features.bubbles.BubbleActivity
 import im.vector.app.features.call.VectorCallActivity
 import im.vector.app.features.call.service.CallHeadsUpActionReceiver
 import im.vector.app.features.home.HomeActivity
@@ -524,6 +525,17 @@ class NotificationUtils @Inject constructor(private val context: Context,
         val openRoomIntent = buildOpenRoomIntent(roomInfo.roomId)
         val smallIcon = R.drawable.ic_status_bar
 
+        val bubbleTarget = Intent(context, BubbleActivity::class.java)
+        val bubbleIntent = PendingIntent.getActivity(context, 2, bubbleTarget, PendingIntent.FLAG_UPDATE_CURRENT)
+        val bubbleIcon = if (largeIcon != null) IconCompat.createWithAdaptiveBitmap(largeIcon) else IconCompat.createWithResource(context, R.drawable.ic_status_bar)
+        
+        val bubbleData = NotificationCompat.BubbleMetadata.Builder()
+            .setIntent(bubbleIntent)
+            .setDesiredHeight(600)
+            .setAutoExpandBubble(true)
+            .setIcon(bubbleIcon)
+            .build()
+
         val channelID = if (roomInfo.shouldBing) NOISY_NOTIFICATION_CHANNEL_ID else SILENT_NOTIFICATION_CHANNEL_ID
         return NotificationCompat.Builder(context, channelID)
                 .setWhen(lastMessageTimestamp)
@@ -537,6 +549,8 @@ class NotificationUtils @Inject constructor(private val context: Context,
 
                 // ID of the corresponding shortcut, for conversation features under API 30+
                 .setShortcutId(roomInfo.roomId)
+
+                .setBubbleMetadata(bubbleData)
 
                 // Title for API < 16 devices.
                 .setContentTitle(roomInfo.roomDisplayName)
